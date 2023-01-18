@@ -4,27 +4,36 @@ import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 @Service
-@AllArgsConstructor
-@RequiredArgsConstructor
+@Slf4j
 public class EmailService implements EmailSender{
+
     @Autowired
     private JavaMailSender javaMailSender;
 
     @Override
+    @Async
     public void send(String to, String email) throws MessagingException {
-        MimeMessage mailMessage = javaMailSender.createMimeMessage();
-        MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mailMessage, "");
-        mimeMessageHelper.setSubject("confirm your email address");
-        mimeMessageHelper.setTo(to);
-        mimeMessageHelper.setFrom("freeborn@gmail");
-        mimeMessageHelper.setText(email,true);
-        javaMailSender.send(mailMessage);
+        try {
+            MimeMessage mailMessage = javaMailSender.createMimeMessage();
+            MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mailMessage, "");
+             mimeMessageHelper.setSubject("confirm your email address");
+             mimeMessageHelper.setTo(to);
+             mimeMessageHelper.setFrom("freeborn@gmail");
+             mimeMessageHelper.setText(email,true);
+             javaMailSender.send(mailMessage);
+        } catch (MessagingException e){
+            log.info("problem 1: " + e.getMessage());
+            log.info("problem2: " + e.getMessage());
+            throw new RuntimeException(e);
+        }
 
     }
 }
