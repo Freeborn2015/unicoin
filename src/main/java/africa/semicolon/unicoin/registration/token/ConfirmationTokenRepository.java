@@ -10,13 +10,13 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Repository
-@Transactional
+
 public interface ConfirmationTokenRepository  extends JpaRepository
         <ConfirmationToken, Long> {
 
     Optional<ConfirmationToken> findByToken(String token);
 
-
+    @Transactional
     void deleteConfirmationTokensByExpiredAtBefore(LocalDateTime currentTime);
     @Transactional
     @Modifying

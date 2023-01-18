@@ -1,5 +1,7 @@
 package africa.semicolon.unicoin.registration;
 
+import africa.semicolon.unicoin.registration.token.ConfirmTokenRequest;
+import africa.semicolon.unicoin.registration.token.ConfirmationTokenRequest;
 import africa.semicolon.unicoin.utils.ApiResponse;
 import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -16,11 +18,13 @@ import java.time.ZonedDateTime;
 @RestController
 @RequestMapping(path = "api/v1/registration")
 public class RegistrationController {
+
     @Autowired
     RegistrationService registrationService;
+
     @PostMapping("/register")
-    public ResponseEntity<ApiResponse>  register(@RequestBody RegistrationRequest registrationRequest,
-                                                 HttpServletRequest httpServletRequest)
+    public ResponseEntity<ApiResponse> register(@RequestBody RegistrationRequest registrationRequest,
+                                                HttpServletRequest httpServletRequest)
             throws MessagingException {
         ApiResponse apiResponse = ApiResponse.builder()
                 .statusCode(HttpStatus.OK.value())
@@ -30,8 +34,23 @@ public class RegistrationController {
                 .isSuccessful(true)
                 .build();
 
-        return new ResponseEntity<>(apiResponse, HttpStatus.OK);
+        return new ResponseEntity<ApiResponse>(apiResponse, HttpStatus.OK);
 
     }
+
+    public ResponseEntity<?> confirmToken(@RequestBody ConfirmTokenRequest
+                                                  confirmTokenRequest,
+                                          HttpServletRequest httpServletRequest
+    ) {
+        ApiResponse apiResponse = ApiResponse.builder()
+                .statusCode(HttpStatus.OK.value())
+                .isSuccessful(true)
+                .timeStamp(ZonedDateTime.now())
+                .path(httpServletRequest.getRequestURI())
+                .data(registrationService.confirmation(confirmTokenRequest))
+                .build();
+        return new ResponseEntity<ApiResponse>(apiResponse, HttpStatus.OK);
+    }
+
 
 }

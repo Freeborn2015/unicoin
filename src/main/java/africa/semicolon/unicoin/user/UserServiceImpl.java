@@ -2,6 +2,7 @@ package africa.semicolon.unicoin.user;
 
 import africa.semicolon.unicoin.registration.token.ConfirmationToken;
 import africa.semicolon.unicoin.registration.token.ConfirmationTokenService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,6 +10,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Service
+@AllArgsConstructor
 public class UserServiceImpl implements UserService{
     @Autowired
     private ConfirmationTokenService confirmationTokenService;
@@ -25,9 +27,15 @@ public class UserServiceImpl implements UserService{
                 user
 
         );
+
         confirmationTokenService.savedConfirmationToken(confirmationToken);
 
 
         return token;
+    }
+
+    @Override
+    public void enableUser(String emailAddress) {
+        userRepository.enable(emailAddress);
     }
 }
