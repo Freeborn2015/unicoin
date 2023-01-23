@@ -1,21 +1,13 @@
 package africa.semicolon.unicoin.registration;
-
-import africa.semicolon.unicoin.email.EmailSender;
 import africa.semicolon.unicoin.user.User;
-import africa.semicolon.unicoin.user.UserRepository;
 import africa.semicolon.unicoin.user.UserServiceImpl;
 import africa.semicolon.unicoin.utils.MockUtils;
 import jakarta.mail.MessagingException;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
-import org.mockito.internal.util.MockUtil;
-
 import static africa.semicolon.unicoin.utils.MockUtils.emailSenderMock;
 import static africa.semicolon.unicoin.utils.MockUtils.userRepositoryMock;
 import static org.mockito.ArgumentMatchers.any;
-;
-
-import static org.junit.jupiter.api.Assertions.*;
+;import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.spy;
 

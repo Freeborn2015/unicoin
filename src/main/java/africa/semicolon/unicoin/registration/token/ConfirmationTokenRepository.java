@@ -10,7 +10,6 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Repository
-
 public interface ConfirmationTokenRepository  extends JpaRepository
         <ConfirmationToken, Long> {
 
@@ -20,9 +19,6 @@ public interface ConfirmationTokenRepository  extends JpaRepository
     void deleteConfirmationTokensByExpiredAtBefore(LocalDateTime currentTime);
     @Transactional
     @Modifying
-    @Query("UPDATE ConfirmationToken confirmationToken " +
-            "SET confirmationToken.confirmedAt = ?1"+
-    "WHERE confirmationToken.token = ?2")
-
+    @Query("UPDATE ConfirmationToken confirmationToken SET confirmationToken.confirmedAt= ?1 WHERE confirmationToken.token= ?2")
     void setConfirmedAt(LocalDateTime now, String token);
 }
