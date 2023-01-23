@@ -1,4 +1,4 @@
-package africa.semicolon.unicoin.login;
+package africa.semicolon.unicoin.user.userRequest;
 
 import lombok.Data;
 

@@ -25,7 +25,7 @@ public class User {
     private String lastName;
     @Enumerated(EnumType.STRING)
     private UserRole userRole;
-    private Boolean isDisabled;
+    private Boolean isDisabled = true;
     private String password;
 
     public User( String emailAddress, String firstName,
