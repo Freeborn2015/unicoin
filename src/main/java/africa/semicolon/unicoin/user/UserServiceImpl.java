@@ -34,6 +34,7 @@ public class UserServiceImpl implements UserService{
         return token;
     }
 
+
     @Override
     public void enableUser(String emailAddress) {
         userRepository.enable(emailAddress);

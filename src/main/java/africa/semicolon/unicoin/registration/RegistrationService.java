@@ -51,15 +51,9 @@ return token;
                 .orElseThrow(()-> new IllegalStateException("token does not exist"));
         if(token.getExpiredAt().isBefore(LocalDateTime.now())){
             throw new RegistrationException("token has expired");
-
         }
-//        if(token.getConfirmedAt()!=null){
-//            throw new IllegalStateException(("token has been used"));
-//        }
         confirmationTokenService.setConfirmAt(token.getToken());
         userService.enableUser(confirmationToken.getEmailAddress());
-
-
         return "confirmed";
     }
     private String buildEmail(String name, String link) {

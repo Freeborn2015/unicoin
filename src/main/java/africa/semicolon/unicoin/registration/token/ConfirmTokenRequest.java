@@ -5,8 +5,8 @@ import lombok.Data;
 
 @Data
 public class ConfirmTokenRequest {
-    @NotNull
+    @NotNull(message = "should not be empty")
     private String token;
-    @NotNull
+    @NotNull(message = "should not be empty")
     private String emailAddress;
 }

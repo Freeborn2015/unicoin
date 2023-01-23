@@ -12,9 +12,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByEmailAddressIgnoreCase(String emailAddress);
     @Modifying
     @Transactional
-@Query("UPDATE User user" +
-        " SET user.isDisabled = false" +
-        "  WHERE user.emailAddress = ?1")
+@Query("UPDATE User user SET user.isDisabled= false WHERE user.emailAddress= ?1")
     void enable(String emailAddress);
 
 }
