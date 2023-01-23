@@ -12,44 +12,44 @@ import java.time.ZonedDateTime;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler
-    public ResponseEntity<?> exceptionHandler(Exception e){
-        e.printStackTrace();
-        return ResponseEntity.badRequest().body(e.getMessage());
+//    @ExceptionHandler
+//    public ResponseEntity<?> exceptionHandler(Exception e){
+//        e.printStackTrace();
+//        return ResponseEntity.badRequest().body(e.getMessage());
+//    }
+
+
+
+
+
+    @ExceptionHandler (RegistrationException.class)
+    public ResponseEntity<ApiResponse>UserAlreadyExistsException(
+            RegistrationException registrationException,
+            HttpServletRequest httpServletRequest
+    ){
+
+        ApiResponse apiResponse = ApiResponse.builder()
+                .timeStamp(ZonedDateTime.now())
+                .data(registrationException.getMessage())
+                .path(httpServletRequest.getRequestURI())
+                .statusCode(HttpStatus.CONFLICT.value())
+                .isSuccessful(false)
+                .build();
+        return new  ResponseEntity<ApiResponse>(apiResponse, HttpStatus.CONFLICT);
     }
+    @ExceptionHandler(GenericExceptionHandler.class)
+    public  ResponseEntity<ApiResponse>GenericHandler(
+            Exception exception,
+            HttpServletRequest httpServletRequest
+    ){
+        ApiResponse apiResponse = ApiResponse.builder()
+                .timeStamp(ZonedDateTime.now())
+                .data(exception.getMessage())
+                .path(httpServletRequest.getRequestURI())
+                .statusCode(HttpStatus.BAD_REQUEST.value())
+                .isSuccessful(false)
+                .build();
+        return new  ResponseEntity<ApiResponse>(apiResponse, HttpStatus.BAD_REQUEST);
 
-
-
-
-
-//    @ExceptionHandler
-//    public ResponseEntity<ApiResponse>UserAlreadyExistsException(
-//            RegistrationException registrationException,
-//            HttpServletRequest httpServletRequest
-//    ){
-//
-//        ApiResponse apiResponse = ApiResponse.builder()
-//                .timeStamp(ZonedDateTime.now())
-//                .data(registrationException.getMessage())
-//                .path(httpServletRequest.getRequestURI())
-//                .statusCode(HttpStatus.CONFLICT.value())
-//                .isSuccessful(false)
-//                .build();
-//        return new  ResponseEntity<ApiResponse>(apiResponse, HttpStatus.CONFLICT);
-//    }
-//    @ExceptionHandler
-//    public  ResponseEntity<ApiResponse>GenericHandler(
-//            Exception exception,
-//            HttpServletRequest httpServletRequest
-//    ){
-//        ApiResponse apiResponse = ApiResponse.builder()
-//                .timeStamp(ZonedDateTime.now())
-//                .data(exception.getMessage())
-//                .path(httpServletRequest.getRequestURI())
-//                .statusCode(HttpStatus.BAD_REQUEST.value())
-//                .isSuccessful(false)
-//                .build();
-//        return new  ResponseEntity<ApiResponse>(apiResponse, HttpStatus.BAD_REQUEST);
-//
-//    }
+    }
 }
